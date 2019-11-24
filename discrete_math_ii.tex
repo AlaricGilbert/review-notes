@@ -1,0 +1,745 @@
+\documentclass[cyan]{elegantnote}
+
+\newcounter{example}[section]
+%\renewcommand{\theExe}{\thesection.\arabic{Exe}}
+\newcommand{\neweg}{\refstepcounter{example}\textsf{例\theexample}\quad}
+\newcommand{\newans}{\textsf{答:}\quad}
+\newcommand{\newpro}{\textsf{证明:}\quad}
+\newcommand{\newmod}{\ \textnormal{mod}\ }
+\author{Alaric}
+\email{alaricgbt@gmail.com}
+\zhtitle{离散数学II}
+\entitle{Discrete Math II}
+\version{1.00}
+\myquote{年轻人，你渴望力量吗？}
+\logo{logo.jpg}
+\cover{cover.pdf}
+
+%green color
+   \definecolor{main1}{RGB}{210,168,75}
+   \definecolor{seco1}{RGB}{9,80,3}
+   \definecolor{thid1}{RGB}{0,175,152}
+%cyan color
+   \definecolor{main2}{RGB}{239,126,30}
+   \definecolor{seco2}{RGB}{0,175,152}
+   \definecolor{thid2}{RGB}{236,74,53}
+%cyan color
+   \definecolor{main3}{RGB}{127,191,51}
+   \definecolor{seco3}{RGB}{0,145,215}
+   \definecolor{thid3}{RGB}{180,27,131}
+
+\usepackage{makecell}
+\usepackage{lipsum}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter{计数原理}
+
+\section{基本组合计数}
+\begin{newthem}[加法法则]
+   加法法则：事件$A$有$m$种产生方式，事件$B$有$n$种产生方式，则“事件$A$或$B$”有$m+n$种产生方式。
+
+   使用条件：事件$A$与$B$产生方式不重叠也不影响。
+
+   推广：事件$A_1$有$p_1$种产生方式，事件$A_2$有$p_2$种产生方式，……，事件$A_k$有$p_k$种产生方式，则则“事件$A_1$或$A_2$或……或$A_k$”有\[\sum_{i=1}^k p_i\]种产生方式。
+\end{newthem}
+\begin{newthem}[乘法法则]
+   加法法则：事件$A$有$m$种产生方式，事件$B$有$n$种产生方式，则“事件$A$与$B$”有$mn$种产生方式。
+
+   使用条件：事件$A$与$B$产生方式不重叠也不影响。
+
+   推广：事件$A_1$有$p_1$种产生方式，事件$A_2$有$p_2$种产生方式，……，事件$A_k$有$p_k$种产生方式，则则“事件$A_1$与$A_2$与……与$A_k$”有\[\prod_{i=1}^k p_i\]种产生方式。
+\end{newthem}
+
+\neweg 求8位二进制字符串个数。
+
+\newans 8位二进制字符串共有$2^8=256$个。
+
+\newpage
+
+\neweg 求1400的不同的正因子个数
+
+\newans $1400=2^35^27$，故其正因子\[n=2^{i}5^{j}7^{k}, 0\leq{}i\leq{}3,0\leq{}j\leq{}2,0\leq{}k\leq{}1 \]
+
+故有$4*3*2=24$个。
+
+\begin{newprop}[容斥原理]
+   如果一件事情既可以用$n_1$种方法完成，也可以用$n_2$种方法完成，那么完成这件事情有$n_1+n_2-$($n_1$和$n_2$中公共的种数)，也即容斥原理：
+   \[\left|A\cup{}B\right| =\left|A\right| + \left|B\right| - \left|A\cap{}B\right| \]
+\end{newprop}
+
+\neweg 求以$'1'$为开头或以$'00'$为结尾的8位二进制串的数目
+
+\newans 
+
+\quad 以$'1'$为开头，有$2^7$种。
+
+\quad 以$'00'$为结尾，有$2^6$种。
+
+\quad 以$'1'$为开头且以$'00'$为结尾，有$2^5$种。
+
+故共有$2^7+2^6-2^5=160$种。
+
+\section{鸽笼原理}
+\begin{newprop}[鸽笼原理]
+   将$k+1$个物品放入$k$个抽屉中，至少有一个抽屉中有多于一个物品。
+\end{newprop}
+\begin{newprop}[广义鸽笼原理]
+   将$N$个物品放入$k$个抽屉中，至少有一个抽屉中有$\lceil\frac{N}{k}\rceil$物品。
+\end{newprop}
+
+\neweg 证明：在30天的比赛里，某球队一天至少打一场比赛，但总共最多打45场比赛。那么一定有连续的若干天内恰好打了14场比赛。
+
+\newpro 设$a_i$为到第$i$天为止，已经打得比赛的数目，则要证一定有连续的若干天内恰好打了14场比赛，即证存在$i$、$j$使得：\[a_j=a_i+14\]
+
+考虑严格递增数列： $a_1,a_2,a_3,\dots{},a_{30}$和：$a_1+14,a_2+14,a_3+14,\dots{},a_{30}+14$，我们有
+\[0<a_1<a_2<\dots{}<a_{30}\leq45\]
+\[14<a_1+14<a_2+14<\dots{}<a_{30}\leq59\]
+
+在这两个序列共60个数中，均有$0<{}x\leq59$，即共有59种可能位置，但有60个数需要填充进去，故根据鸽巢原理我们可知至少有一个位置填充了两个数。又我们规定，这两个序列都是严格递增的，故不存在序列内有两个数相等的情况。
+
+故必有一第一序列中的数与第二序列中的数相等，即存在$a_j=a_i+14$，证毕。
+
+\neweg 证明：在不超过$2n$的$n+1$个正整数中，必然存在一个能整除另外一个整数。
+
+\newpro 不超过$2n$的正整数中，共有$1,3,5,\dots,2n-1$共n个奇数，故根据鸽巢原理在不超过$2n$的$n+1$个正整数中的$n+1$个奇因子中至少有两个数的奇因子相同。
+
+奇因子相同的两个数$x<y$必有$y=x\cdot2^k, k\in \mathbb{N}^*$，故$\frac{y}{x}=2^k$为一大于1的整数，即$y$可整除$x$。
+
+故不超过$2n$的$n+1$个正整数中，必然存在一个能整除另外一个整数。
+
+\neweg 证明：假定有一组6个人，任两人非友即敌。证明存在三个人彼此是朋友或者存在三人彼此是敌人。
+
+\newpro 在这6人中任取一人A，由“任两人非友即敌”和广义鸽笼原理可知，剩下的5人中至少有$\lceil\frac52\rceil=3$人与A互为敌人或至少有$\lceil\frac52\rceil=3$人与A互为朋友。
+
+1）至少有3人与A互为敌人：若这三人中有一对人互为敌人，则这一对人与A三人互为敌人；若这三人中不存在一对人互为敌人，则这三人互为朋友。即存在三个人彼此是朋友或者存在三人彼此是敌人。
+
+2）至少有3人与A互为朋友：若这三人中有一对人互为朋友，则这一对人与A三人互为朋友；若这三人中不存在一对人互为朋友，则这三人互为敌人。即存在三个人彼此是朋友或者存在三人彼此是敌人。
+
+综上，即存在三个人彼此是朋友或者存在三人彼此是敌人，证毕。
+
+\section{排列与组合}
+\begin{newdef}[Permutation]
+   A permutation (排列) of a set of distinct objects is an ordered arrangement of these objects. An ordered arrangement of r elements of a set is called an r-permuation (r-排列).
+
+   n元素集的r排列数记作P(n,r)。
+\end{newdef}
+
+\begin{newprop}[Formula of Permutation]
+   For any $r\in\mathbb{N}$ and $1\leq{}r\leq{}n$:
+   \[P(n,r)=\prod_{i=0}^{r-1}(n-i)=n(n-1)(n-2)\cdots(n-r+1)\]
+\end{newprop}
+
+\begin{newproof}
+   使用乘法原则，选择第1个数有$n$种方法，选择第2个数有$n-1$种方法，$\cdots$，选择第r个数有$n-r+1$种方法，故
+   \[P(n,r)=\prod_{i=0}^{r-1}(n-i)=n(n-1)(n-2)\cdots(n-r+1)\]
+\end{newproof}
+
+\begin{newthem}[Formula of Permutation]
+   For any $r,n\in\mathbb{N}$ and $1\leq{}r\leq{}n$:
+   \[P(r,n)=\frac{n!}{(n-r)!}\]
+\end{newthem}
+
+\neweg 排列 26 个字母，使得 a 与 b 之间恰有 7 个字母，求方法数 （无重复排列）
+
+\newans 有$2\cdot{}P(26-2,7)\cdot{}P(18,18)=2\cdot{}P(24,7)\cdot{}18! =$种方法。
+
+\begin{newdef}[Combination]
+   r-组合：从一个集合中无序选择出r个元素的过程。
+
+   n元素集的r组合的数目记为C(n,r)，或记为$\binom n r$（二项式系数）。
+\end{newdef}
+
+\begin{newprop}[Formula of Combination]
+   For any $r\in\mathbb{N}$ and $1\leq{}r\leq{}n$:
+   \[C(n,r)=\frac{n!}{(n-r)!r!}\]
+\end{newprop}
+
+\begin{newproof}
+   使用乘法原则，$P(n,r)=C(n,r)\cdot{}P(r,r)$，故
+   \[C(n,r)=\frac{P(n,r)}{P(r,r)}=\frac{n!}{(n-r)!r!}\]
+\end{newproof}
+
+\section{二项式系数与恒等式}
+\begin{newprop}[二项式定理]
+   \[(x+y)^n=\sum_{k=0}^n\binom{n}{k}x^ky^{(n-k)}\]   
+\end{newprop}
+
+\begin{newproof}
+   使用组合分析法。在$(x+y)^n$的展开式中，$x^ky^{(n-k)}$的系数即从$n$个式子中选取出$k$个提供$x$，而剩下的$n-k$个式子提供$y$，即系数为$\binom{n}{k}$，故展开式即对$\binom{n}{k}x^ky^{(n-k)}$的求和，即：\[(x+y)^n=\sum_{k=0}^n\binom{n}{k}x^ky^{(n-k)}\] 
+\end{newproof}
+
+\begin{newprop}[组合计数恒等式]
+   \[\binom{n}{k}=\binom{n}{n-k}\]
+   \[\binom{n}{k}=\frac{n}{k}\binom{n-1}{k-1}\]
+   \[\binom{n}{k}=\binom{n-1}{k}+\binom{n-1}{k-1}\]
+   \[\sum_{k=0}^n\binom{n}{k}=2^n\]
+   \[\sum_{k=0}^n(-1)^k\binom{n}{k}=0\]
+   \[\sum_{k=0}^nk\binom{n}{k}=n2^{n-1}\]
+   \[\sum_{k=0}^nk^2\binom{n}{k}=n(n+1)2^{n-2}\]
+   \[\sum_{l=0}^nk\binom{l}{k}=\binom{n+1}{k+1}\]
+   \[\binom{n}{r}\binom{r}{k}=\binom{n}{k}\binom{n-k}{r-k}\]
+   \[\sum_{k=0}^rk\binom{m}{k}\binom{n}{r-k}=\binom{m+n}{r}\Rightarrow\sum_{k=0}^rk\binom{m}{k}\binom{n}{k}=\binom{m+n}{m}\]
+\end{newprop}
+
+\begin{newprop}[Pascal恒等式]
+   If $n$ and $k$ are integers with $n\geq k\geq 0$ , then
+   \[\binom{n+1}{k}=\binom{n}{k-1}+\binom{n}{k}\]
+\end{newprop}
+
+\begin{newproof}
+
+   组合分析法：设元素$a$和任意一含有$n+1$个元素的集合$T$满足$a\in T$，$S=T-\{a\}$。$\binom{n+1}{k}$即为从T中任取k个元素的组合数：
+
+   采用分类加法计数原理：
+
+   1.从$S$中选取$k$个元素，共$\binom{n}{k}$种方法。
+
+   2.选取元素$a$，再从从$S$中选取$k-1$个元素，共$\binom{n}{k-1}$种方法。
+
+   故共有$\binom{n}{k}+\binom{n}{k-1}$种，即：
+   \[\binom{n+1}{k}=\binom{n}{k-1}+\binom{n}{k}\]
+
+\end{newproof}
+
+\begin{note}
+   使用Pascal恒等式即可得到Pascal三角形，也即杨辉三角。
+\end{note}
+
+\section{可重复的排列与组合}
+\begin{newthem}[可重复的排列数]
+   具有$n$个元素的集合容许重复的$r$排列数是$n^r$。
+\end{newthem}
+\begin{newthem}[可重复的组合数]
+   具有$n$个元素的集合容许重复的$r$组合数是$C(n-1+r,r)=C(n-1+r,n-1)$。
+\end{newthem}
+\begin{newproof}
+
+   类似于上面的例题，这种$n$个元素的可重复的$r$组合，相当于在$n$种物体之间$n-1$条分割线位置以及$r$个被选元素对象的位置，共$n-1+r$个备选位置中选择出$r$个位置去标记为选中的$r$个对象，没有被选中的位置标记为分割线，选中的标记为元素对象的，根据其在哪两条分割线之间，来确定是对应于$n$种元素中的第几个元素被选中。无论是否是连续元素，都表示的是其位置对应的元素被选中。这样总共有$C(n-1+r,r)$种选择的方法。
+\end{newproof}
+\newpage
+\begin{newproof}
+   
+   换一种思路思考：此问题也相当于从集合$S=\{a_1,a_2,\cdots,a_i,\cdots,a_n\}$中有重复的选取$r$个元素，若设$x_i$是选取到元素$a_i$的个数，则有$x_1+x_2+\cdots+x_n=r$。求$S$的可重复的$r$排列数即求不定方程
+   \[x_1+x_2+\cdots+x_n=r\]
+   
+   的非负整数解的个数，该方程的非负整数解对应于下面的排列
+   \[
+      \overbrace{
+      \underbrace{(1\cdots1)}_{\text{$x_1$个}}+
+      \underbrace{(1\cdots1)}_{\text{$x_2$个}}+
+      \underbrace{(1\cdots1)}_{\text{$x_3$个}}+
+      \cdots+
+      \underbrace{(1\cdots1)}_{\text{$x_n$个}}
+      }^{\text{共有$r$个1，$n-1$个+号，即$r+n-1$个占位符}}
+   \]
+
+   这样思考，排列数就相当于从$r+n-1$个位置中选择$r$个元素标记为1，其余标记为+号的组合数，有$C(n-1+r,r)$种。
+
+\end{newproof}
+
+\section{综合应用}
+\subsection{具有不可辨别的对象的集合的排列}
+\begin{newthem}[具有不可辨别的对象的集合的排列]
+设有类型1的相同对象$n_1$个，类型2的相同对象$n_2$个，……，类型$k$的对象$n_k$个(共$n$个对象)，那么这$n$个对象的不同排列数为
+\[\frac{n!}{n_1!n_2!\cdots{}n_k!}\]
+\end{newthem}
+\subsection{总结：把物体放入盒子问题模型}
+\begin{newthem}[可辨别物体放入可辨别盒子]
+   设将$n$个不同物品放入$k$个不同盒子，第$i$个盒子中的物体有$n_i$个，方法数为：
+   \[\frac{n!}{n_1!n_2!\cdots{}n_k!}\]
+\end{newthem}
+\begin{newthem}[不可辨别物体放入可辨别盒子]
+   设将$n$个相同物品放入$r$个不相同盒子中去，方法数为：$C(n-r+1,n)$
+\end{newthem}
+
+可辨别物体放入不可辨别盒子与不可辨别物体放入不可辨别盒子中还未找到有效的简单公式，需要具体问题具体分析\footnote{不考，我好了。}
+
+\neweg （可辨别物体放入不可辨别盒子）将4个员工送到3个相同的办公室。
+
+\newans 采用分步方法：
+
+1)全在一个办公室，1种
+
+2)分到两个办公室中，
+
+\quad a) 1个员工-3个员工，有$C(4,1)=4$种
+
+\quad b) 2个员工-2个员工，有$\frac{\frac{4!}{2!2!}}{2!}=3$种
+
+3)分到三个办公室中，有$\frac{C(4,1)C(3,1)}{2!}=6$种
+
+共14种。
+
+\neweg （不可辨别物体放入不可辨别盒子）将6本相同的书放入到4个相同的抽屉中
+
+\newans 采用分步方法：
+
+1) 全放一个抽屉，1种。
+
+2) 放在两个抽屉，1-5、2-4、3-3，三种。
+
+3) 放在三个抽屉，1-1-4、1-2-3、2-2-2，三种。
+
+4) 放在四个抽屉，2种。
+
+共9种。
+
+\chapter{高级计数原理}
+\section{求解线性递推关系}
+\begin{newdef}[常系数线性齐次递推方程]
+   如果$c_1,c_2,\cdots,c_k$和$b_0,b_1,\cdots,b_{k-1}$为与$n$无关的常系数，则称方程：
+   \[
+      \left\{
+         \begin{aligned}
+            a_n=c_1a_{n-1}+c_2a_{n-2}+\cdots+c_ka_{n-k}\\
+            a_0=b_0,a_1=b_1,a_2=b_2,\cdots,a_{n-1}=b_{k-1}
+         \end{aligned}
+      \right.
+   \]
+   为$k$阶常系数线性齐次递推方程，$b_0,b_1,\cdots,b_{k-1}$为该方程的$k$个初值。
+\end{newdef}
+\begin{newdef}[递推关系特征方程与特征根]
+   求解常系数线性齐次递推方程：
+   \[
+      \left\{
+         \begin{aligned}
+            a_n=c_1a_{n-1}+c_2a_{n-2}+\cdots+c_ka_{n-k}\\
+            a_0=b_0,a_1=b_1,a_2=b_2,\cdots,a_{n-1}=b_{k-1}
+         \end{aligned}
+      \right.
+   \]
+   的基本思路是找到满足$a_n=r^n$($r$为常数)的解。
+   我们注意到$a_n=r^n$是方程$a_n=c_1a_{n-1}+c_2a_{n-2}+\cdots+c_ka_{n-k}$的解，当且仅当其满足方程：
+   \[r^n=c_1r^{n-1}+c_2r^{n-2}+\cdots+c_kr^{n-k}\]
+   因此上述递推关系以$a_n=r^n$为解的充分必要条件是$r$为如下方程的解：
+   \[r^k-c_1r^{k-1}-c_2r^{k-2}-\cdots-c_{k-1}r-c_k=0\]
+   这个方程称为递推关系的特征方程，这个方程的根称为特征根。
+\end{newdef}
+\begin{newthem}
+   $a_n=r^n$是递推关系的解当且仅当$r$是它的特征方程的根。
+\end{newthem}
+\begin{newthem}
+   如果$a_n$和$b_n$都是某常系数线性齐次解递推关系的解，那么$a_n$和$b_n$的任一线性组合$t_1a_n+t_2b_n$也是该递推关系的解。
+\end{newthem}
+\begin{newthem}
+   若方程：
+   \[r^k-c_1r^{k-1}-c_2r^{k-2}-\cdots-c_{k-1}r-c_k=0\]
+   恰有k个不同的解：
+   \[r_1,r_2,r_3,\dots,r_k\]
+   则递推关系：
+   \[a_n=c_1a_{n-1}+c_2a_{n-2}+\cdots+c_ka_{n-k}\]
+   的解为：
+   \[a_n=\alpha_1r_1^n+\alpha_2r_2^n+\cdots+\alpha_kr_k^n+\]
+   其中，$\alpha_1,\alpha_2,\cdots,\alpha_k$的值可由初始值解出。
+\end{newthem}
+\begin{newthem}
+   若方程：
+   \[r^k-c_1r^{k-1}-c_2r^{k-2}-\cdots-c_{k-1}r-c_k=0\]
+   有$t$个不同的解$(t<k)$：
+   \[r_1,r_2,r_3,\dots,r_t\]
+   且对于任一根$r_i$有其重数为$m_i$，
+   \[m_1+m_2+m_3+\dots+m_t=k\]
+   则递推关系$a_n=c_1a_{n-1}+c_2a_{n-2}+\cdots+c_ka_{n-k}$
+   的解为：
+   \[
+      a_n=\sum_{k=1}^t(\alpha_{k,0}+\alpha_{k,1}n+\cdots\alpha_{k,m_k-1}n^{m_k-1})r_k^n
+   \]
+
+\end{newthem}
+
+
+线性非齐次方程使用特解+通解求解
+\section{分治算法与递推关系}
+\begin{newdef}[分治递推关系]
+   假定一个分治算法将一个复杂度为$f(n)$的问题分为$a$个复杂度为 $f(\frac{n}{b})$的问题，同时再假定把子问题的解组合成原来问题的解的算法处理中，需要总量为$g(n)$的额外运算数。则有：
+   \[f(n)=af(\frac{n}{b})+g(n)\]
+   这个关系被称为分治递推关系。
+\end{newdef}
+\begin{newthem}
+   分治递推关系
+   \[f(n)=af(\frac{n}{b})+g(n)\]
+   复杂度为
+   \[
+      f(n)=\left\{
+         \begin{aligned}
+            O(n^{\log_ba}) && if && a > 1 \\
+            O(\log_bn) && if && a = 1
+         \end{aligned}
+         \right.
+   \]
+\end{newthem}
+\begin{newproof}
+   设$n_k=b^k$，则由\[f(n)=af(\frac{n}{b})+g(n)\]
+   考虑齐次方程\[f(n)=af(\frac{n}{b})\]
+   令$n=b^k$，有
+   \[
+      \begin{aligned}
+         f(b^k) & =af(b^{k-1})\\
+                & =a^2f(b^{k-2})\\
+                & = \cdots\\
+                & =a^kf(1)
+      \end{aligned}
+   \]
+   故$f(n)=a^k$。
+   可得
+   \[
+      f(n)=\left\{
+         \begin{aligned}
+            O(n^{\log_ba}) && if && a > 1 \\
+            O(\log_bn) && if && a = 1
+         \end{aligned}
+         \right.
+   \]
+\end{newproof}
+\section{生成函数及其应用}
+
+\qquad\neweg 求序列${a_n}$的生成函数，$a_n = 7\cdot3^n$。
+
+\newans 
+\[G(x)=\sum_{k=0}^\infty{}7\cdot{}x^n3^n=7\sum_{k=0}^\infty{}x^n3^n=7\sum_{k=0}^\infty(3x)^n=7\frac{1}{1-3x}\]
+
+\neweg 已知 ${a_n}$ 的生成函数为 \[G(x)=\frac{2+3x-6x^2}{1-2x}\] 求$a_n$
+
+\newans
+\[
+   \begin{aligned}
+      G(x) && = &&\frac{2+3x-6x^2}{1-2x} \\
+           && = &&\frac{2}{1-2x} +3x\\
+           && = &&2\sum_{k=0}^\infty{}(2x)^n+3x\\
+           && = &&\sum_{k=0}^\infty{}2^{n+1}x^n+3x
+   \end{aligned}
+\]
+\[
+      a_n=\left\{
+         \begin{aligned}
+            2^{n+1} && if && n \neq 1 \\
+            2^2+3 = 7&& if && n = 1
+         \end{aligned}
+      \right.
+\]
+
+\section{容斥原理及其应用}
+\begin{newthem}[容斥原理]
+   \[\left|\bigcup_{i=1}^nA_i\right| =\sum_{m=1}^n\sum_{1\leq{}i_1\leq{}i_2\leq{}\cdots\leq{}i_m\leq{}n}(-1)^{m+1}\left|\bigcap_{j=i_1}^{i_m}A_j\right|\]
+\end{newthem}
+\begin{newthem}[全错位排列]
+   \[D_n=n!\left[1-\frac{1}{1!}+\frac{1}{2!}-\cdots+(-1)^n\frac{1}{n!}\right]\]
+\end{newthem}
+\chapter{数论初步和RSA加密}
+\section{除余和模运算}
+\begin{newdef}[整除]
+   若整数$a$、$b$满足$a\neq{}0$，则$a$整除$b$当且仅当存在整数$c$使得$b=ac$。
+   \begin{itemize}
+      \item 当$a$整除$b$时，$a$称作$b$的因数或除数，$b$称作$a$的倍数。
+      \item $a$整除$b$，记作$a\mid b$；$a\mid b$则$\frac{b}{a}$是一个整数。
+      \item $a$不整除$b$，记作$a\nmid b$。
+   \end{itemize}
+\end{newdef}
+\begin{newthem}
+   \begin{itemize}
+      \item $(a\mid b)\land(a\mid c)\Rightarrow a\mid(b+c)$
+      \item $\forall c\in \mathbb{Z},a\mid b \Rightarrow a\mid bc$
+      \item $(a\mid b)\land(b\mid c)\Rightarrow a\mid c$
+   \end{itemize}
+\end{newthem}
+\begin{newthem}
+   $\forall a,b,c \in\mathbb{Z},a\neq0 \quad (a\mid b)\land(a\mid c)\Rightarrow a\mid(mb+nc)$
+\end{newthem}
+\begin{newthem}[整除定理]
+   对于整数$a$和正整数$d$，存在唯一的整数对$(q,r)$，$0\leq{}r<d$，使得$a=dq+r$。
+   \begin{itemize}
+      \item $q = a$ div $d$
+      \item $r = a$ mod $d$
+   \end{itemize}
+\end{newthem}
+\begin{newdef}[模同余关系]
+   若整数$a$、$b$和正整数$m$满足$m\mid(a-b)$则称整数$a$、$b$关于$m$同余。记作：\[a\equiv{}b\pmod m\]
+\end{newdef}
+\begin{newthem}
+   \[a\equiv{}b\pmod m\Rightarrow \exists k\in\mathbb{Z}, a = b+km\]
+\end{newthem}
+\begin{note}
+   $a\equiv{}b\pmod m$与$r = a$ \textnormal{mod} $b$中 \textnormal{mod} 的含义不同。
+\end{note}
+\begin{newthem}
+   \[a\equiv{}b\pmod m\Rightarrow (a\ \textnormal{mod}\ m) = (b\ \textnormal{mod}\ m)\]
+\end{newthem}
+\begin{newthem}
+   若$a\equiv{}b\pmod m$且$c\equiv{}d\pmod m$，则：
+   \[(a+c)\equiv(b+d)\pmod m\]
+   且\[ac\equiv{}bd\pmod m\]
+\end{newthem}
+\begin{newproof}
+   因为$a\equiv{}b\pmod m$且$c\equiv{}d\pmod m$，由Theorem 3.3可知：
+   \[\exists{}s,t\in\mathbb{Z}\quad{}a=b+sm,c=d+tm\]
+   \[(a+c)=(b+d)+(s+t)m\]
+   且
+   \[ac=bd+(bt+ds+stm)m\]
+   故即
+   \[(a+c)\equiv(b+d)\pmod m\]
+   且
+   \[ac\equiv{}bd\pmod m\]
+\end{newproof}
+\begin{newcorol}
+   对于整数$a$、$b$和正整数$m$，有：
+   \[(a+b)\newmod{}m=((a\newmod m) +(b\newmod m))\newmod m\]
+   \[ab\newmod{}m=((a\newmod m)\cdot(b\newmod m))\newmod m\]
+\end{newcorol}
+\begin{newproof}
+   不妨设$a=r_a+km,b=r_b+tm$，
+   则:
+   \begin{align*}
+      ((a\newmod m) +(b\newmod m))\newmod m &=(r_a+r_b)\newmod m\\
+      &=(r_a+r_b+pm)\newmod m\\
+      &=(r_a+km+r_b+tm)\newmod m\\
+      &=(a+b)\newmod m
+   \end{align*}
+   \begin{align*}
+      ((a\newmod m)\cdot(b\newmod m))\newmod m &=(r_ar_b)\newmod m\\
+      &=(r_ar_b+pm)\newmod m\\
+      &=(r_ar_b+r_atm+r_bkm+ktm)\newmod m\\
+      &=((r_a+km)\cdot(r_b+tm))\newmod m\\
+      &=ab\newmod m
+   \end{align*}
+
+   证毕。
+\end{newproof}
+\begin{newdef}[模余的算术运算]
+   设$\mathbb{Z}_m$是小于整数$m$的非负整数集：$\{0,1,2,\cdots,m-1\}$。
+   \begin{itemize}
+      \item 运算符$+_m$定义为：$a+_mb=(a+b)$\newmod $m$
+      \item 运算符$\cdot_m$定义为：$a\cdot_mb=(a\cdot{}b)$\newmod $m$
+   \end{itemize}
+   
+\end{newdef}
+\section{素数和最大公约数}
+\begin{newthem}[算术基本定理]
+   任何一个大于1的正整数都可以唯一地分解为若干个素数的乘积：
+   \[n=\prod_{i=1}^kp_i^{e_i},(n>1)\]
+\end{newthem}
+\begin{note}
+   寻找素数的方法：埃拉托色尼筛网法，找出$N$内的素数，只需在$N$内删去所有小于等于$\sqrt{N}$的所有素数的倍数即可。
+\end{note}
+\begin{newthem}[素数无限定理]
+   存在无限个素数。
+\end{newthem}
+\begin{newproof}
+   反证法。假设存在有限个素数，个数为$n$：$p_1,p_2,\cdots,p_n$
+
+   即可构造出：
+   \[p=\prod_{k=1}^np_k+1\]
+
+   不能被1和自身以外的数整除，即$p$是新的素数。
+
+   与仅存在$n$个素数矛盾，题设错误。
+
+   故存在无数个素数。
+\end{newproof}
+\begin{newdef}[最大公约数]
+
+   设非零整数$a$、$b$，则称同时满足$d\mid a$和$d\mid b$的最大整数$d$为非零整数$a$、$b$的最大公约数，记作$d=\textnormal{gcd}(a,b)$。
+   \begin{itemize}
+      \item $\textnormal{gcd}(a,b)=1$，则称$a$、$b$互素。
+      \item 对于非零整数$a_1,a_2,\cdots,a_n$，若$\forall 1\leq{}i<j\leq{}n,\textnormal{gcd}(a_i,a_j)=1$，则称$a_1,a_2,\cdots,a_n$两两互素。
+   \end{itemize}
+\end{newdef}
+\begin{newdef}[最小公倍数]
+
+   设非零整数$a$、$b$，则称同时满足$a\mid d$和$b\mid a$的最小整数$d$为非零整数$a$、$b$的最大公约数，记作$d=\textnormal{lcm}(a,b)$。
+\end{newdef}
+\begin{note}
+   可以利用整数的因数分解求最大公因子（公约数）和最小公倍数。
+\end{note}
+\begin{newthem}
+   \[ab=\textnormal{lcm}(a,b)\textnormal{gcd}(a,b)\]
+\end{newthem}
+\begin{note}
+   The Euclidian algorithm is an efficient method for computing the greatest
+
+   common divisor of two integers. It is based on the idea that $\textnormal{gcd}(a,b)$ is equal 
+   
+   to $\textnormal{gcd}(b,c)$ when $a > b$ and $c$ is the remainder when $a$ is divided by $b$ .
+\end{note}
+\neweg 求gcd(91,287)。
+
+\newans
+
+\quad 287=91*3+14
+
+\quad \phantom291=14*6+7
+
+\quad \phantom214=\phantom17*2+0
+
+故gcd(287,91)=gcd(91,14)=gcd(14,7)=7
+
+\begin{newthem}[Bézout’s Theorem]
+   若$a$、$b$是正整数，则存在整数$s$、$t$使得：
+   \[\textnormal{gcd}(a,b)=sa+tb\]
+   推论：若$a$、$b$互素，在存在整数$s$、$t$使得：
+   \[1=\textnormal{gcd}(a,b)=sa+tb\]
+\end{newthem}
+
+\begin{newthem}
+   已知$a$、$b$是正整数，$c$是整数，若$ac\equiv bc\pmod m$且$\textnormal{gcd}(c,m)=1$，则：\[a\equiv b\pmod m\]
+\end{newthem}
+
+\begin{newproof}
+
+   因为$ac\equiv bc\pmod m$，故$m\mid(ac-bc)$，即$m\mid{}c(a-b)$
+
+   $\textnormal{gcd}(c,m)=1$故由Th3.10，$c$、$m$互素。
+
+   故$m\mid{}(a-b)$，即$a\equiv b\pmod m$，证毕。
+\end{newproof}
+
+\section{解同余方程}
+\begin{newdef}[线性同余方程]
+   形如：
+   \[ax\equiv b\pmod m\]
+   的方程叫做线性同余方程。其中，$a$、$b$是整数，$m$是正整数，$x$是未知数。
+\end{newdef}
+\begin{newdef}[模逆]
+   满足：
+   \[\bar{a}a\equiv1\pmod m\]
+   的数$\bar{a}$称作$a$关于$m$的模逆。
+\end{newdef}
+\begin{note}
+   例如：5是3关于7的模逆，因为5x3 mod 7=1。
+\end{note}
+\begin{newthem}[模逆存在唯一性定理]
+   若$a$与$m$互素且$m>1$，则$a$关于$m$的模逆是存在且唯一的。
+\end{newthem}
+
+\neweg 求101关于42620的模逆。
+
+\newans 先用辗转相除法求gcd(101,4620)
+
+4620=45*101+75
+
+101=1*75+26
+
+75=26*2+23
+
+26=1*23+3
+
+23=7*3+2
+
+3=1*2+1
+
+2=2*1+0
+
+gcd(101,4620)=1
+
+然后反向推导：
+
+1=3-1*2
+
+1=3-1*(23-7*3)=-1*23+8*3
+
+1=-1*23+8*(26-23)=8*26-9*23
+
+1=8*26-9*(75-26*2)=-9*75+26*26
+
+1=-9*75+26*(101-75)=26*101-35*75
+
+1=26*101-35*(4620-45*101)=1601*101-35*4620
+
+1=$sa+tm$
+
+$\bar{a}=s=1601$
+
+101关于42620的模逆为1601。
+
+\begin{note}
+   根据模逆可求线性同余方程的解。
+\end{note}
+\section{欧拉函数及费尔马小定理}
+\begin{newdef}[欧拉函数]
+   令辅助函数
+   \[
+      \varphi(n,k)=\left\{
+      \begin{aligned}
+         1&&gcd(k, n)=1\\
+         0&&gcd(k, n)\neq1
+      \end{aligned}
+      \right.
+   \]
+   则欧拉函数值
+   \[\Phi(n)=\sum_{k=1}^n\varphi(n,k)\]
+   欧拉函数$\Phi(n)$即为小于等于$n$的数中与$n$互素的数的数目。
+   特别地，当$n$为质数$p$时
+   \[\Phi(p)=p-1\]
+\end{newdef}
+\begin{newthem}
+   $p$、$q$为质数，则：
+   \[\Phi(pq)=pq-(p+q-1)=(p-1)(q-1)\]
+\end{newthem}
+\begin{newthem}[欧拉定理]
+   当$a$为一个与$n$互素的不大于$n$的数，则：
+   \[a^{\Phi(n)}\equiv1\pmod n\]
+   $p$、$q$为质数，则(在RSA加密中用到)：
+   \[m^{(p-1)(q-1)}\equiv1\pmod {pq}\]
+\end{newthem}
+\begin{newthem}[费马小定理]
+   $p$为素数，则：
+   \[a^{p-1}\equiv1\pmod p\]
+\end{newthem}
+\neweg 利用费马小定理计算 $7^{222}$ mod 11
+
+\newans $7^{222}$ mod 11 = $((49$ mod 11 $)*(7^{10})$ mod 11 $)$ mod 11 = 5。
+
+\newpage
+
+\neweg 证明：若$p$是一个奇素数，则当$k$是非负整数时，每一个梅森数$2^p-1$的因数是$2kp+1$的形式。
+
+\newpro 
+
+引理：先证gcd$(2^a-1,2^b-1)=2^{\textnormal{gcd}(a,b)}-1$。
+
+不妨假设$a>b$，$2^a-1=2^{b}2^{a-b}-2^{a-b}+2^{a-b}-1=2^{a-b}(2^b-1)+2^{a-b}-1$
+
+则gcd$(2^a-1,2^b-1)=$gcd$(2^{a-b}-1,2^b-1)$=$\cdots{}$=$2^{\textnormal{gcd}(a,b)}-1$
+
+设素数$q\mid(2^p-1)$。
+
+由费马小定理，$q\mid(2^{q-1}-1)$，故gcd$(2^p-1,2^{q-1}-1)\geq{}q>1$
+
+又因为gcd$(2^p-1,2^{q-1}-1)$=$2^{\textnormal{gcd}(p,q-1)}-1$
+
+所以gcd$(p,q-1)>1$。又$p$是奇素数，故gcd$(p,q-1)=p$
+
+即$p\mid (q-1)$，$q=mp+1$，又因为$p$、$q$为奇数，故$m$为一偶数$m=2k$。
+
+即$q=2kp+1$。即每一个梅森数$2^p-1$的因数是$2kp+1$的形式。证毕。
+
+\section{密码学(RSA加密解密)}
+\subsection{RSA加密公钥的生成}
+
+\qquad 1.选取大质数对$p$=50647，$q$=32833
+
+2.计算：$N=pq$=1662892951，$\Phi(N)=$1662809472
+
+3.选取$e=16553$，计算得：$d=$735622169
+
+公钥为$(N,e)$
+
+\subsection{RSA加密与解密}
+\begin{newdef}
+   加密公式：
+   \[C=E(x)=x^e\%N\]
+   解密公式：
+   \[x=D(E(x))=C^d\%N\]
+\end{newdef}
+
+例如：$x=23311$
+
+密文$C=x^e\%N$=610592872
+
+解密得$x=C^d\%N=23311$
+\end{document}
